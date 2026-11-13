@@ -52,6 +52,18 @@ app.get("/events/:id", async(req, res)=>{
   res.send(events)
 })
 
+app.patch("/events/:id", async(req, res)=>{
+  const id = req.params.id;
+  const updatedData= req.body;
+  const result = await eventsCollection.updateOne({
+    _id: new ObjectId(id)},
+    {
+      $set:updatedData
+    }
+  )
+  res.send(result)
+})
+
 app.get('/events', async(req, res)=>{
     const result = await eventsCollection.find().toArray();
     res.send(result)
